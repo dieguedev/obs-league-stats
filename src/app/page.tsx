@@ -8,16 +8,22 @@ import { UserStats } from '@LeagueStatsOverlay/domain/models/UserStats';
 import Image from 'next/image';
 import useSWR from 'swr';
 
-const fetchPlayerStats = async ([gameName, tagLine]: [string, string]) => {
-  return await getRankedStats(gameName, tagLine);
+const fetchPlayerStats = async ([gameName, tagLine, region]: [
+  string,
+  string,
+  string | undefined,
+]) => {
+  return await getRankedStats(gameName, tagLine, region);
 };
 
 function PlayerCard() {
   const searchParams = useSearchParams();
   const gameName = searchParams.get('gameName');
   const tagLine = searchParams.get('tagLine');
+  const region = searchParams.get('region') ?? undefined;
 
-  const swrKey = gameName && tagLine ? ([gameName, tagLine] as const) : null;
+  const swrKey =
+    gameName && tagLine ? ([gameName, tagLine, region] as const) : null;
 
   const {
     data: rankedStats,
