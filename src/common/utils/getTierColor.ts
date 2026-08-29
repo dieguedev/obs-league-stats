@@ -12,6 +12,8 @@ export const getTierColor = (tier: string): string => {
       return 'text-gold';
     case 'platinum':
       return 'text-platinum';
+    case 'emerald':
+      return 'text-emerald';
     case 'diamond':
       return 'text-diamond';
     case 'master':
