@@ -31,7 +31,7 @@ function parseSummoner(
 export default function SummonerPage() {
   const params = useParams<{ region: string; summoner: string }>();
   const region = params.region;
-  const parsedSummoner = parseSummoner(params.summoner);
+  const parsedSummoner = parseSummoner(decodeURIComponent(params.summoner));
 
   const swrKey = parsedSummoner
     ? ([parsedSummoner.gameName, parsedSummoner.tagLine, region] as const)
