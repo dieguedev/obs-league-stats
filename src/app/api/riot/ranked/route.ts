@@ -1,12 +1,46 @@
 import { isUndefined } from '@LeagueStatsOverlay/common/utils/isUndefined';
+import { REGIONS, Region } from '@LeagueStatsOverlay/domain/constants/regions';
 import { NextRequest, NextResponse } from 'next/server';
 
 const riotApiKey = process.env.RIOT_API_KEY;
 
-const REGION_MAP: Record<string, string> = {
+const PLATFORM_IDS = {
   euw: 'euw1',
   eune: 'eun1',
-};
+  na: 'na1',
+  br: 'br1',
+  lan: 'la1',
+  las: 'la2',
+  oce: 'oc1',
+  kr: 'kr',
+  jp: 'jp1',
+  tr: 'tr1',
+  ru: 'ru',
+} as const satisfies Record<Region, string>;
+
+type PlatformId = (typeof PLATFORM_IDS)[Region];
+
+const ROUTING_VALUES = {
+  euw1: 'europe',
+  eun1: 'europe',
+  tr1: 'europe',
+  ru: 'europe',
+  na1: 'americas',
+  br1: 'americas',
+  la1: 'americas',
+  la2: 'americas',
+  kr: 'asia',
+  jp1: 'asia',
+  oc1: 'sea',
+} as const satisfies Record<PlatformId, string>;
+
+function getPlatformId(regionParam: string): PlatformId | undefined {
+  if (!REGIONS.includes(regionParam as Region)) {
+    return undefined;
+  }
+
+  return PLATFORM_IDS[regionParam as Region];
+}
 
 export async function GET(request: NextRequest) {
   if (isUndefined(riotApiKey)) {
@@ -22,17 +56,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({}, { status: 422 });
   }
 
-  const region = REGION_MAP[regionParam];
-  if (!region) {
+  const platformId = getPlatformId(regionParam);
+  if (!platformId) {
     return NextResponse.json(
-      { error: 'Invalid region. Allowed: euw, eune' },
+      { error: `Invalid region. Allowed: ${REGIONS.join(', ')}` },
       { status: 400 },
     );
   }
+  const routingValue = ROUTING_VALUES[platformId];
 
   try {
     const accountResponse = await fetch(
-      `https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(
+      `https://${routingValue}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(
         gameName,
       )}/${tagLine}`,
       {
@@ -48,7 +83,7 @@ export async function GET(request: NextRequest) {
     const { puuid } = await accountResponse.json();
 
     const rankedResponse = await fetch(
-      `https://${region}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
+      `https://${platformId}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
       {
         headers: {
           'X-Riot-Token': riotApiKey,
@@ -62,7 +97,7 @@ export async function GET(request: NextRequest) {
     const rankedStats = await rankedResponse.json();
 
     const profileResponse = await fetch(
-      `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`,
+      `https://${platformId}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`,
       {
         headers: {
           'X-Riot-Token': riotApiKey,
