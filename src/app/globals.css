@@ -17,6 +17,8 @@
   --color-master: rgb(138, 43, 226);
   --color-grandmaster: rgb(220, 20, 60);
   --color-challenger: rgb(255, 185, 15);
+  --color-tan: rgb(198, 165, 128);
+  --color-emerald: rgb(97, 190, 116);
   --font-montserrat: var(--font-montserrat);
 }
 
