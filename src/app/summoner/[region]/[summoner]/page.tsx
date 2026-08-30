@@ -58,7 +58,7 @@ export default function SummonerPage() {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-[250px] h-[350px] flex flex-col items-center justify-center text-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 px-4 py-4 rounded-lg">
+        <div className="text-center">
           <h2 className="text-xl font-bold mb-4 text-red-500 text-shadow-custom">
             Error al cargar los datos
           </h2>
@@ -73,7 +73,7 @@ export default function SummonerPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-[250px] h-[350px] flex flex-col items-center justify-center text-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 px-4 py-4 rounded-lg">
+        <div className="text-center">
           <div className="animate-pulse">
             <h2 className="text-xl font-bold mb-4 text-shadow-custom">
               Cargando datos...
@@ -91,7 +91,7 @@ export default function SummonerPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-[250px] h-[350px] flex flex-col items-center justify-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 px-4 py-4 rounded-lg">
+      <div className="flex flex-col items-center justify-center">
         {rankedStats.tier === 'UNRANKED' ? (
           <Image
             src="/ranked/icons/unranked.png"
@@ -104,8 +104,13 @@ export default function SummonerPage() {
             className="relative flex justify-center"
             style={{
               width: '208px',
-              height: '210px',
+              height: '270px',
+              // Empuja el emblema hacia arriba (el arte de wings tiene mucho
+              // margen transparente en la parte superior)
               marginTop: '-120px',
+              // Compensa la altura real (270px) para que el nombre no quede
+              // separado: el arte de wings tiene mucho margen transparente
+              marginBottom: '-60px',
             }}
           >
             <Image
@@ -161,7 +166,7 @@ export default function SummonerPage() {
           </div>
         )}
         <p
-          className={`ml-[5px] font-bold text-xl text-shadow-custom ${rankedStats.tier === 'UNRANKED' ? '' : 'mt-4'}`}
+          className={`ml-[5px] font-bold text-3xl text-shadow-custom ${rankedStats.tier === 'UNRANKED' ? '' : 'mt-4'}`}
         >
           {gameName}
         </p>
