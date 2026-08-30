@@ -59,11 +59,31 @@ export default function SummonerPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
-          <h2 className="text-xl font-bold mb-4 text-red-500 text-shadow-custom">
-            Error al cargar los datos
+          <h2
+            role="img"
+            aria-label="Error 404"
+            className="text-[80px] leading-none text-tan font-black mb-2 flex items-center justify-center gap-1"
+          >
+            <span aria-hidden="true">4</span>
+            <Image
+              src="/poro-pregunta.png"
+              alt=""
+              aria-hidden="true"
+              width={80}
+              height={80}
+              className="inline-block"
+            />
+            <span aria-hidden="true">4</span>
           </h2>
+          <p className="text-md font-black text-shadow-custom mb-2">
+            Invocador no encontrado
+          </p>
           <p className="text-sm text-shadow-custom">
-            Verifica que el nombre y tag sean correctos: {gameName}#{tagLine}
+            Verifica que el nombre
+            <br /> y tag sean correctos:{' '}
+            <span className="text-unranked font-bold">
+              {gameName}#{tagLine}
+            </span>
           </p>
         </div>
       </div>

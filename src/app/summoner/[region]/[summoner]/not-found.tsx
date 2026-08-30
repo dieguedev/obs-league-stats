@@ -4,25 +4,23 @@ export default function SummonerNotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="text-center">
-        <h2
-          role="img"
-          aria-label="Error 404"
-          className="text-[72px] leading-none text-tan font-black mb-2 flex items-center justify-center gap-1"
-        >
-          <span aria-hidden="true">4</span>
-          <Image
-            src="/poro-pregunta.png"
-            alt=""
-            aria-hidden="true"
-            width={72}
-            height={72}
-            className="inline-block"
-          />
-          <span aria-hidden="true">4</span>
-        </h2>
-        <p className="text-md font-black text-shadow-custom">
-          Invocador no <br />
-          encontrado
+        <Image
+          src="/poro-preocupado.png"
+          alt=""
+          aria-hidden="true"
+          width={96}
+          height={96}
+          className="inline-block mb-2"
+        />
+        <p className="text-md font-black text-shadow-custom mb-2">
+          Formato incorrecto
+        </p>
+        <p className="text-sm text-shadow-custom">
+          Asegúrate de utilizar el formato:
+          <br />
+          <span className="font-bold text-unranked">
+            /summoner/:region/:usuario-tag
+          </span>
         </p>
       </div>
     </div>
