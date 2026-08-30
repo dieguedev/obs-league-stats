@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function SummonerNotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="min-w-[224px] min-h-[224px] flex flex-col items-center justify-center text-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 w-fit px-4 py-4 rounded-lg">
+      <div className="w-[250px] h-[350px] flex flex-col items-center justify-center text-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 px-4 py-4 rounded-lg">
         <h2
           role="img"
           aria-label="Error 404"

@@ -22,6 +22,8 @@ export const getTierColor = (tier: string): string => {
       return 'text-grandmaster';
     case 'challenger':
       return 'text-challenger';
+    case 'unranked':
+      return 'text-unranked';
     default:
       return 'text-foreground';
   }

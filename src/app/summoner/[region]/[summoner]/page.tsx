@@ -58,11 +58,11 @@ export default function SummonerPage() {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
-          <h2 className="text-xl text-gray-600 font-bold mb-4 text-red-500">
+        <div className="w-[250px] h-[350px] flex flex-col items-center justify-center text-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 px-4 py-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-4 text-red-500 text-shadow-custom">
             Error al cargar los datos
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-shadow-custom">
             Verifica que el nombre y tag sean correctos: {gameName}#{tagLine}
           </p>
         </div>
@@ -73,12 +73,12 @@ export default function SummonerPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
+        <div className="w-[250px] h-[350px] flex flex-col items-center justify-center text-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 px-4 py-4 rounded-lg">
           <div className="animate-pulse">
-            <h2 className="text-xl text-gray-600 font-bold mb-4">
+            <h2 className="text-xl font-bold mb-4 text-shadow-custom">
               Cargando datos...
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-shadow-custom">
               {gameName}#{tagLine}
             </p>
           </div>
@@ -91,81 +91,102 @@ export default function SummonerPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="flex flex-col items-center justify-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 w-fit px-4 py-4 rounded-lg">
-        <div
-          className="relative flex justify-center"
-          style={{
-            width: '208px',
-            height: '210px',
-            marginTop: '-120px',
-          }}
-        >
+      <div className="w-[250px] h-[350px] flex flex-col items-center justify-center backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl shadow-black/10 px-4 py-4 rounded-lg">
+        {rankedStats.tier === 'UNRANKED' ? (
           <Image
-            src={`/ranked/plates/icons/wings_${rankedStats.tier.toLowerCase()}.png`}
-            alt={rankedStats.tier}
-            width={208}
-            height={270}
-            className="absolute"
-            style={{
-              left: '50%',
-              top: '0',
-              transform: 'translateX(-50%)',
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              zIndex: 10,
-            }}
+            src="/ranked/icons/unranked.png"
+            alt="Unranked"
+            width={120}
+            height={120}
           />
-          <Image
-            src={`https://cdn.communitydragon.org/latest/profile-icon/${rankedStats.profileIconId}`}
-            alt="Profile Icon"
-            width={76}
-            height={76}
-            className="absolute rounded-full"
+        ) : (
+          <div
+            className="relative flex justify-center"
             style={{
-              top: '126px',
-              left: '66.5px',
-              zIndex: 5,
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
+              width: '208px',
+              height: '210px',
+              marginTop: '-120px',
             }}
-          />
-          {rankedStats.tier !== 'IRON' && (
-            <video
-              className="absolute w-full h-auto"
+          >
+            <Image
+              src={`/ranked/plates/icons/wings_${rankedStats.tier.toLowerCase()}.png`}
+              alt={rankedStats.tier}
+              width={208}
+              height={270}
+              className="absolute"
               style={{
                 left: '50%',
                 top: '0',
                 transform: 'translateX(-50%)',
+                backgroundPosition: 'center center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                zIndex: 10,
               }}
-              autoPlay
-              loop
-              muted
-              playsInline
-            >
-              <source
-                src={`/ranked/plates/animations/emblem-wings-magic-${rankedStats.tier.toLowerCase()}.webm`}
-                type="video/webm"
-              />
-            </video>
-          )}
-        </div>
-        <p className="ml-[5px] font-bold text-3xl text-shadow-custom mt-4">
+            />
+            <Image
+              src={`https://cdn.communitydragon.org/latest/profile-icon/${rankedStats.profileIconId}`}
+              alt="Profile Icon"
+              width={76}
+              height={76}
+              className="absolute rounded-full"
+              style={{
+                top: '126px',
+                left: '66.5px',
+                zIndex: 5,
+                backgroundPosition: 'center center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+            {rankedStats.tier !== 'IRON' && (
+              <video
+                className="absolute w-full h-auto"
+                style={{
+                  left: '50%',
+                  top: '0',
+                  transform: 'translateX(-50%)',
+                }}
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source
+                  src={`/ranked/plates/animations/emblem-wings-magic-${rankedStats.tier.toLowerCase()}.webm`}
+                  type="video/webm"
+                />
+              </video>
+            )}
+          </div>
+        )}
+        <p
+          className={`ml-[5px] font-bold text-xl text-shadow-custom ${rankedStats.tier === 'UNRANKED' ? '' : 'mt-4'}`}
+        >
           {gameName}
         </p>
-        <p className="ml-[5px] font-bold text-md text-shadow-custom">
-          <span className={getTierColor(rankedStats.tier)}>
-            {rankedStats.tier} {rankedStats.rank}
-          </span>
-          {` ${rankedStats.leaguePoints} LP`}
-        </p>
-        <p className="ml-[5px] font-bold text-md text-shadow-custom">
-          {rankedStats.wins}W - {rankedStats.losses}L{' '}
-          <span className={getTierColor(rankedStats.tier)}>
-            {rankedStats.winRate}% WR
-          </span>
-        </p>
+        {rankedStats.tier === 'UNRANKED' ? (
+          <p
+            className={`ml-[5px] font-bold text-md text-shadow-custom ${getTierColor(rankedStats.tier)}`}
+          >
+            Unranked
+          </p>
+        ) : (
+          <>
+            <p className="ml-[5px] font-bold text-md text-shadow-custom">
+              <span className={getTierColor(rankedStats.tier)}>
+                {rankedStats.tier} {rankedStats.rank}
+              </span>
+              {` ${rankedStats.leaguePoints} LP`}
+            </p>
+            <p className="ml-[5px] font-bold text-md text-shadow-custom">
+              {rankedStats.wins}W - {rankedStats.losses}L{' '}
+              <span className={getTierColor(rankedStats.tier)}>
+                {rankedStats.winRate}% WR
+              </span>
+            </p>
+          </>
+        )}
       </div>
     </div>
   );
